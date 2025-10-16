@@ -1,0 +1,20 @@
+{
+    "name": "Collection Name #1",
+    "description": "Description of your NFT collection",
+    "image": "ipfs://bafybeier76rxazymnqrpipfqevfpvy5mhhqlfvm563ea4qdw2y26jehr6e/1.png",
+    "license_url": "ipfs://bafkreiau7prsmxovw3kwv5wltidwdbaudvgcnaozkqzfhg6ye4766jcrbe",
+    "attributes": [
+      {
+        "trait_type": "Iris",
+        "value": "Mystic Purple"
+      },
+      {
+        "trait_type": "Power",
+        "value": "Prophecy"
+      },
+      {
+        "trait_type": "Era",
+        "value": "Age of Magic"
+      }
+    ]
+}

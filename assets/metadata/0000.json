@@ -1,0 +1,20 @@
+{
+    "name": "Collection Name #0",
+    "description": "Description of your NFT collection",
+    "image": "ipfs://bafybeier76rxazymnqrpipfqevfpvy5mhhqlfvm563ea4qdw2y26jehr6e/0.png",
+    "license_url": "ipfs://bafkreiau7prsmxovw3kwv5wltidwdbaudvgcnaozkqzfhg6ye4766jcrbe",
+    "attributes": [
+      {
+        "trait_type": "Iris",
+        "value": "Emerald Green"
+      },
+      {
+        "trait_type": "Power",
+        "value": "Nature's Sight"
+      },
+      {
+        "trait_type": "Era",
+        "value": "Druidic Medieval"
+      }
+    ]
+}
