@@ -16,11 +16,11 @@ contract ClassicDropTest is Test {
         alice = makeAddr("alice");
         bob = makeAddr("bob");
 
+        vm.prank(initialOwner);
         nft = new ClassicDrop(
             "ClassicDrop",
             "CDROP",
             "ipfs://meta/",
-            initialOwner,
             3
         );
     }
@@ -40,7 +40,7 @@ contract ClassicDropTest is Test {
 
         vm.prank(initialOwner);
         nft.setBaseURI("ipfs://new/");
-        assertEq(nft.tokenURI(0), "ipfs://new/0");
+        assertEq(nft.tokenURI(0), "ipfs://new/0000.json");
     }
 
     function testFreezeBaseURILocksUpdates() public {
@@ -100,11 +100,11 @@ contract ClassicDropTest is Test {
 
     function testTokenURIConcatenation() public {
         // default baseURI set in constructor
-        assertEq(nft.tokenURI(0), "ipfs://meta/0");
+        assertEq(nft.tokenURI(0), "ipfs://meta/0000.json");
 
         vm.prank(initialOwner);
         nft.setBaseURI("ipfs://updated/");
-        assertEq(nft.tokenURI(2), "ipfs://updated/2");
+        assertEq(nft.tokenURI(2), "ipfs://updated/0002.json");
     }
 }
 

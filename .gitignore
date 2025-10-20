@@ -1,0 +1,17 @@
+# Foundry artifacts (all subprojects)
+EVM_Contracts/**/lib/
+EVM_Contracts/**/out/
+EVM_Contracts/**/cache/
+EVM_Contracts/**/broadcast/
+
+# Env & secrets
+.env
+.env.*
+
+# OS/editor files
+.DS_Store
+.idea/
+.vscode/
+
+# Logs
+*.log

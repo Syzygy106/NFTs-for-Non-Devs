@@ -8,11 +8,10 @@ import {ClassicDrop} from "../src/ClassicDrop.sol";
 contract Deploy is Script {
     function run() external {
         // Required .env variables:
-        // NAME, SYMBOL, BASE_URI, INITIAL_OWNER, INITIAL_SUPPLY
+        // NAME, SYMBOL, BASE_URI, INITIAL_SUPPLY
         string memory name_ = vm.envString("NAME");
         string memory symbol_ = vm.envString("SYMBOL");
         string memory baseURI_ = vm.envString("BASE_URI");
-        address initialOwner = vm.envAddress("INITIAL_OWNER");
         uint256 initialSupply = vm.envUint("INITIAL_SUPPLY");
 
         vm.startBroadcast();
@@ -20,7 +19,6 @@ contract Deploy is Script {
             name_,
             symbol_,
             baseURI_,
-            initialOwner,
             initialSupply
         );
         vm.stopBroadcast();
@@ -29,7 +27,6 @@ contract Deploy is Script {
         console2.log("Name:", name_);
         console2.log("Symbol:", symbol_);
         console2.log("BaseURI:", baseURI_);
-        console2.log("InitialOwner:", initialOwner);
         console2.log("InitialSupply:", initialSupply);
     }
 }
