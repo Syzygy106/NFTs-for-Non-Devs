@@ -1,0 +1,41 @@
+# Compiler files
+cache/
+out/
+
+# Ignores development broadcast logs
+!/broadcast
+/broadcast/*/31337/
+/broadcast/**/dry-run/
+
+# Dotenv file
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# Node.js
+scripts/node_modules/
+scripts/package-lock.json
+
+# Security audit reports
+reports/
+*.sarif
+docs/
+lcov.info
+SECURITY.md
+audit.sh
+
+# Script-generated files (do not commit)
+scripts/whitelist_data.json
+scripts/merkle_root.txt
+scripts/merkle_tree.json
+scripts/proof_*.json
+scripts/provenance.txt
+scripts/provenance_data.json
+
+# Misc
+*.swp
+*.swo
+*~
+.DS_Store

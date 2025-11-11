@@ -48,13 +48,40 @@ Browse the `EVM_Contracts/` folder for complete implementations:
 
 ---
 
+### 📌 Scenario 2: Mystery Box NFT (Whitelist + Time-Limited + Provenance)
+**Path:** `EVM_Contracts/scenario_2/`
+
+**Use case:** Time-limited whitelist sale with mystery box reveal mechanics and provenance verification
+
+**Tech stack:**
+- ERC-721A (gas-efficient batch minting)
+- Merkle whitelist (off-chain list, on-chain verification)
+- Time-locked minting period (BUY_PERIOD_START/END)
+- Mystery box mechanics (reveal after sale ends)
+- Provenance hash (prevents post-sale manipulation)
+- Wallet limits (anti-whale protection)
+- Foundry scripts for mint/reveal/withdraw
+- Node.js helper scripts (whitelist/proof/provenance generation)
+
+**Features:**
+- Only whitelisted addresses can mint during buy period
+- Limit per wallet (MAX_PER_WALLET)
+- Owner can update whitelist before sale starts
+- Owner reveals collection after buy period ends
+- All tokens show mystery box URI until reveal
+- Provenance hash committed at deployment for transparency
+
+**Best for:** Exclusive drops, community sales, fair launches, hype-building reveals
+
+**[→ Full deployment guide](EVM_Contracts/scenario_2/HowToDeploy.md)**
+
+---
+
 ### 🔜 Coming Soon
 
-- **Scenario 2:** Public Mint with Merkle Whitelist
 - **Scenario 3:** Lazy Minting (off-chain vouchers)
 - **Scenario 4:** Dutch Auction
 - **Scenario 5:** Bonding Curve Minting
-- **Scenario 6:** Secret Word Minting
 
 ---
 
@@ -69,8 +96,9 @@ Browse the `EVM_Contracts/` folder for complete implementations:
 ```
    Full guide: https://book.getfoundry.sh/getting-started/installation
 
-2. **Get testnet ETH**  
-   Use a faucet for Sepolia or your chosen testnet
+2. **Get funds for deployment**  
+   - For testing: Use Polygon mainnet (low fees, OpenSea supported)
+   - For production: Ethereum mainnet or your preferred L2
 
 ### Choose Your Scenario
 
@@ -103,8 +131,12 @@ Each scenario's README covers:
 Each scenario folder is **fully self-contained**. You can:
 ```bash
 # Copy just the scenario you need
-cp -r scenarios/scenario_1_classic_drop my-nft-project
+cp -r EVM_Contracts/scenario_1 my-nft-project
 cd my-nft-project
+
+# Install dependencies
+forge install OpenZeppelin/openzeppelin-contracts@v5.0.2
+forge install chiru-labs/ERC721A@v4.2.3
 
 # It works independently
 forge build
@@ -116,11 +148,14 @@ forge test
 Keep the full repo and navigate between scenarios to compare approaches:
 ```bash
 # Compare gas costs
-cd scenarios/scenario_1_classic_drop && forge test --gas-report
-cd ../scenario_2_merkle_mint && forge test --gas-report
+cd EVM_Contracts/scenario_1 && forge test --gas-report
+cd ../scenario_2 && forge test --gas-report
 
 # Compare deployment complexity
-diff scenario_1_classic_drop/script/Deploy.s.sol scenario_3_lazy_mint/script/Deploy.s.sol
+diff scenario_1/script/Deploy.s.sol scenario_2/script/Deploy.s.sol
+
+# Compare contract features
+diff scenario_1/src/ClassicDrop.sol scenario_2/src/MysteryBoxNFT.sol
 ```
 
 ### Option 3: Build Your Own Hybrid
@@ -128,8 +163,8 @@ diff scenario_1_classic_drop/script/Deploy.s.sol scenario_3_lazy_mint/script/Dep
 Mix features from different scenarios:
 
 - Take batch minting from Scenario 1
-- Add whitelist logic from Scenario 2
-- Combine with royalty setup from Scenario 3
+- Add whitelist and time-locking from Scenario 2
+- Combine with custom pricing or royalty logic
 
 ---
 
@@ -187,11 +222,12 @@ All scenarios support any EVM-compatible network. Common choices:
 | Network | Use Case | RPC Examples |
 |---------|----------|--------------|
 | **Ethereum Mainnet** | High-value collections | Infura, Alchemy, QuickNode |
-| **Polygon** | Low-cost minting | `https://polygon-rpc.com` |
+| **Polygon** | Low-cost minting & testing (OpenSea supported) | `https://polygon-rpc.publicnode.com` |
 | **Base** | Coinbase ecosystem | `https://mainnet.base.org` |
 | **Arbitrum** | L2 scaling | `https://arb1.arbitrum.io/rpc` |
 | **Optimism** | L2 scaling | `https://mainnet.optimism.io` |
-| **Sepolia (testnet)** | Testing | Infura, Alchemy |
+
+**Note:** For testing NFT marketplace integration (OpenSea, etc.), we recommend deploying to **Polygon mainnet** directly, as Sepolia testnet is no longer supported by major marketplaces. Polygon has very low gas fees and is ideal for testing.
 
 ---
 

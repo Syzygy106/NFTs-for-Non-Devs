@@ -2,10 +2,8 @@ NFT Contracts Starter Kit
 
 This folder contains multiple Foundry-ready NFT contract templates covering common business cases:
 
-- Vanilla ERC721 (OpenZeppelin)
-- Classic Drop (ERC721A + ERC2309 consecutive mint)
-- Lazy Minting (off-chain signed vouchers)
-- Secret Word Minting (simple on-chain secret check)
+- **Scenario 1**: Classic Drop (ERC721A + ERC2309 consecutive mint)
+- **Scenario 2**: Mystery Box NFT (whitelist, time-limited, provenance, reveal mechanism)
 
 Each subproject is self-contained with:
 
@@ -17,26 +15,36 @@ Each subproject is self-contained with:
 
 Prerequisites
 
-- Foundry installed (`forge`, `cast`). See Foundry book.
-- A funded deployer wallet private key on your target network (e.g., Sepolia).
+- **Foundry** installed (`forge`, `cast`). See https://book.getfoundry.sh/getting-started/installation
+- **Node.js** (for scenario_2 helper scripts). See https://nodejs.org/
+- A funded deployer wallet with private key on your target network (Polygon recommended for testing).
 
 Quick Start (example flow)
 
-1. Pick a template, e.g., `scenario_1` (Classic Drop) or `vanilla-erc721`.
+1. Pick a scenario, e.g., `scenario_1` (Classic Drop) or `scenario_2` (Mystery Box).
 2. Enter the project folder and install dependencies:
-   - `forge install OpenZeppelin/openzeppelin-contracts@v5.0.2`
-   - If using ERC721A: `forge install chiru-labs/ERC721A@v4.2.3`
-3. Either export env vars as shown in the scenario's HowToDeploy, or copy `.env.example` to `.env` and fill `PRIVATE_KEY` and `RPC_URL`.
+   ```bash
+   cd scenario_1  # or scenario_2
+   forge install OpenZeppelin/openzeppelin-contracts@v5.0.2
+   forge install chiru-labs/ERC721A@v4.2.3
+   ```
+   For `scenario_2`, also install Node.js dependencies for helper scripts:
+   ```bash
+   cd scripts && npm install && cd ..
+   ```
+3. Configure deployment by creating `.env` file (see each scenario's `env.example`).
 4. Build: `forge build`
-5. Deploy:
-   - `forge script script/Deploy.s.sol --rpc-url $RPC_URL --broadcast --private-key $PRIVATE_KEY`
+5. Test: `forge test --offline -vv`
+6. Deploy:
+   ```bash
+   forge script script/Deploy.s.sol --rpc-url $RPC_URL --broadcast --private-key $PRIVATE_KEY
+   ```
 
-Projects
+Available Scenarios
 
-- `scenario_1`: Classic Drop using ERC721A with ERC-2309 consecutive mint; entire supply minted in constructor. See `scenario_1/HowToDeploy.md`.
-- `vanilla-erc721`: Minimal OpenZeppelin ERC721 with owner minting to arbitrary recipients and token URIs.
-- `lazy-mint`: Redeem pre-signed vouchers from a trusted signer (no upfront mint cost).
-- `secret-word`: Users can mint by providing a secret phrase hashed on-chain.
+- **`scenario_1`**: Classic Drop using ERC721A with ERC-2309 consecutive mint; entire supply minted in constructor. Perfect for traditional PFP collections and art drops. See `scenario_1/HowToDeploy.md`.
+  
+- **`scenario_2`**: Mystery Box NFT with Merkle whitelist, time-limited buy period, mystery box reveal mechanics, and provenance hash verification. Includes Foundry scripts (Deploy/Mint/Reveal/Withdraw) and Node.js helpers (whitelist/proof/provenance generation). Full test coverage (23 tests). See `scenario_2/HowToDeploy.md`.
 
 Notes
 
