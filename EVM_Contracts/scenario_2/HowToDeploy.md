@@ -55,15 +55,39 @@ https://ethereum.publicnode.com
 
 ## 🎨 Step 1: Prepare Your Collection
 
-Use the repo’s `assets/` folder and follow its short guide:
+Use the repo's `assets/` folder and follow its short guide:
 - Images: `assets/images/` (zero‑padded filenames: `0000.PNG`, `0001.PNG`, ...).
 - Metadata: `assets/metadata/` (one JSON per tokenId).
 - Full tips: see `assets/README.md`.
 
-What you need here:
-- Upload `assets/images/` to IPFS → save `IMAGES_CID`.
-- Set `.env → MYSTERY_BOX_URI` to a single `mystery.json` (unrevealed card) you upload to IPFS.
-- After you’re ready to reveal, upload `assets/metadata/` to IPFS → save `METADATA_CID` for `reveal("ipfs://METADATA_CID/")`.
+### Mystery Box Metadata
+Create a single `mystery.json` file for the unrevealed state. All tokens will show this before reveal:
+
+```json
+{
+  "name": "Mystery Box",
+  "description": "This NFT is currently unrevealed. Wait for the collection reveal to discover what's inside!",
+  "image": "ipfs://QmYourMysteryImage/box.png",
+  "attributes": [
+    {
+      "trait_type": "Status",
+      "value": "Unrevealed"
+    }
+  ]
+}
+```
+
+Upload this file to IPFS and save the full path (e.g., `ipfs://QmXXX/mystery.json`).
+
+### What you need:
+1. **Mystery Box Image**: Create one "closed box" image → upload to IPFS
+2. **Mystery Box Metadata**: Create `mystery.json` (example above) → upload to IPFS → save URI for `MYSTERY_BOX_URI`
+3. **Collection Images**: Upload `assets/images/` to IPFS → save `IMAGES_CID` (used in individual metadata files)
+4. **Collection Metadata**: Upload `assets/metadata/` to IPFS → save `METADATA_CID` for reveal (`REVEALED_BASE_URI=ipfs://METADATA_CID/`)
+
+**Important**: 
+- `MYSTERY_BOX_URI` = full path to file (`ipfs://QmXXX/mystery.json`)
+- `REVEALED_BASE_URI` = directory path with trailing slash (`ipfs://QmYYY/`)
 
 ---
 
@@ -73,9 +97,9 @@ The provenance hash proves you won't manipulate the collection after sale.
 
 ### Using Node.js (reads from assets/metadata by default)
 
-Run it:
+Run it from scenario_2/:
 ```bash
-node generateProvenance.js
+node scripts/generateProvenance.js
 ```
 ---
 
@@ -95,10 +119,10 @@ Note: A starter whitelist template is provided at `scripts/whitelist.txt`. You c
 
 #### Method 1: Using JavaScript
 
-Install dependencies and run:
+Install dependencies and run from scenario_2/:
 ```bash
-npm install merkletreejs keccak256
-node generateWhitelist.js
+cd scripts && npm install && cd ..
+node scripts/generateWhitelist.js
 ```
 
 #### Method 2: Using Online Tool
@@ -253,7 +277,7 @@ forge verify-contract \
 
 Usage:
 ```bash
-node getProof.js 0x1234567890123456789012345678901234567890
+node scripts/generateProof.js 0x1234567890123456789012345678901234567890
 ```
 
 ### Mint Using Foundry Script (recommended)
